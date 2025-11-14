@@ -1,20 +1,20 @@
-import React, { useState } from "react";
-import { signupUser } from "../api";
-import "./SignupForm.css";
+import React, { useState } from "react"
+import { signupUser } from "../api"
+import "./SignupForm.css"
 
 const SignupForm = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
-    role: "Client",
-  });
-  const [message, setMessage] = useState("");
+    role: "Student",
+  })
+  const [message, setMessage] = useState("")
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+    const { name, value } = e.target
+    setFormData({ ...formData, [name]: value })
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -34,28 +34,28 @@ const SignupForm = () => {
     <div className="signup-container">
       <div className="signup-card">
         <h2>Create your account</h2>
-        <p className="subtitle">Join FreelanceHub and start your journey 🚀</p>
+        <p className="subtitle">Join Campus Connect and start your journey </p>
 
         <div className="role-selector">
           <label>
             <input
               type="radio"
               name="role"
-              value="Client"
-              checked={formData.role === "Client"}
+              value="Admin"
+              checked={formData.role === "Admin"}
               onChange={handleChange}
             />
-            Client
+            Admin
           </label>
           <label>
             <input
               type="radio"
               name="role"
-              value="Freelancer"
-              checked={formData.role === "Freelancer"}
+              value="Student"
+              checked={formData.role === "Student"}
               onChange={handleChange}
             />
-            Freelancer
+            Student
           </label>
         </div>
 
