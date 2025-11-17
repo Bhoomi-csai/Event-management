@@ -42,7 +42,7 @@ const SignupForm = () => {
               type="radio"
               name="role"
               value="Admin"
-              checked={formData.role === ""}
+              checked={formData.role === "Admin"}
               onChange={handleChange}
             />
             Admin
@@ -52,7 +52,7 @@ const SignupForm = () => {
               type="radio"
               name="role"
               value="Student"
-              checked={formData.role === ""}
+              checked={formData.role === "Student"}
               onChange={handleChange}
             />
             Student
@@ -94,4 +94,4 @@ const SignupForm = () => {
   );
 };
 
-export default SignupForm;
+export default SignupForm
