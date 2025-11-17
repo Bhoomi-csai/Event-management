@@ -1,30 +1,30 @@
-import React, { useState } from "react";
-import { loginUser } from "../api";
-import "./LoginForm.css";
+import React, { useState } from "react"
+import { loginUser } from "../api"
+import "./LoginForm.css"
 
 const LoginForm = () => {
-  const [credentials, setCredentials] = useState({ email: "", password: "" });
-  const [message, setMessage] = useState("");
+  const [credentials, setCredentials] = useState({ email: "", password: "" })
+  const [message, setMessage] = useState("")
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setCredentials({ ...credentials, [name]: value });
+    setCredentials({ ...credentials, [name]: value })
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const result = await loginUser(credentials);
+    const result = await loginUser(credentials)
 
     if (result.token) {
-      localStorage.setItem("token", result.token);
-      setMessage("Login successful! Redirecting...");
+      localStorage.setItem("token", result.token)
+      setMessage("Login successful! Redirecting...")
       setTimeout(() => {
-        window.location.href = "/dashboard";
+        window.location.href = "/dashboard"
       }, 1200);
     } else {
-      setMessage(result.message || "Invalid credentials");
+      setMessage(result.message || "Invalid credentials")
     }
-  };
+  }
 
   return (
     <div className="login-container">
