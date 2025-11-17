@@ -20,7 +20,7 @@ app.use("/api/projects", projectRoutes);
 
 
 app.get("/", (req, res) => {
-  res.send("Event Management Backend is running...")
+  res.send("Campus Connect Backend is running...")
 });
 
 const PORT = process.env.PORT || 5001

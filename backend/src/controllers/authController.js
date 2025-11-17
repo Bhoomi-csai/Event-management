@@ -3,10 +3,13 @@ import jwt from "jsonwebtoken";
 import db from "../config/db.js";
 
 export const signup = async (req, res) => {
-  const { name, email, password, role } = req.body;
+  let { name, email, password, role } = req.body;
 
   if (!name || !email || !password || !role)
     return res.status(400).json({ message: "All fields required" });
+
+  if (role.toLowerCase() === "student") role = "Student";
+  if (role.toLowerCase() === "admin") role = "Admin";
 
   db.query("SELECT * FROM users WHERE email = ?", [email], async (err, result) => {
     if (err) return res.status(500).json({ message: "Database error" });
@@ -19,12 +22,16 @@ export const signup = async (req, res) => {
       "INSERT INTO users (name, email, password_hash, role) VALUES (?, ?, ?, ?)",
       [name, email, hashed, role],
       (err, data) => {
-        if (err) return res.status(500).json({ message: "Error creating user" });
+        if (err) {
+          console.log(err);  // debug
+          return res.status(500).json({ message: "Error creating user" });
+        }
         return res.status(201).json({ message: "Signup successful" });
       }
     );
   });
 };
+
 
 export const login = async (req, res) => {
   const { email, password } = req.body;

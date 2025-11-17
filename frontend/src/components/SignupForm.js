@@ -7,8 +7,9 @@ const SignupForm = () => {
     name: "",
     email: "",
     password: "",
-    role: "Student",
+    role: "student",   
   })
+
   const [message, setMessage] = useState("")
 
   const handleChange = (e) => {
@@ -17,42 +18,44 @@ const SignupForm = () => {
   }
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const result = await signupUser(formData);
+    e.preventDefault()
+
+    const result = await signupUser(formData)
 
     if (result.message === "Signup successful") {
-      setMessage("Signup successful! Redirecting...");
+      setMessage("Signup successful! Redirecting...")
       setTimeout(() => {
-        window.location.href = "/login";
-      }, 1200);
+        window.location.href = "/login"
+      }, 1200)
     } else {
-      setMessage(result.message || "Something went wrong");
+      setMessage(result.message || "Something went wrong")
     }
-  };
+  }
 
   return (
     <div className="signup-container">
       <div className="signup-card">
         <h2>Create your account</h2>
-        <p className="subtitle">Join Campus Connect and start your journey </p>
+        <p className="subtitle">Join Campus Connect and start your journey</p>
 
         <div className="role-selector">
           <label>
             <input
               type="radio"
               name="role"
-              value="Admin"
-              checked={formData.role === "Admin"}
+              value="admin"
+              checked={formData.role === "admin"}
               onChange={handleChange}
             />
             Admin
           </label>
+
           <label>
             <input
               type="radio"
               name="role"
-              value="Student"
-              checked={formData.role === "Student"}
+              value="student"
+              checked={formData.role === "student"}
               onChange={handleChange}
             />
             Student
@@ -67,6 +70,7 @@ const SignupForm = () => {
             onChange={handleChange}
             required
           />
+
           <input
             type="email"
             name="email"
@@ -74,6 +78,7 @@ const SignupForm = () => {
             onChange={handleChange}
             required
           />
+
           <input
             type="password"
             name="password"
@@ -81,6 +86,7 @@ const SignupForm = () => {
             onChange={handleChange}
             required
           />
+
           <button type="submit">Sign Up</button>
         </form>
 
@@ -91,7 +97,7 @@ const SignupForm = () => {
         </p>
       </div>
     </div>
-  );
-};
+  )
+}
 
 export default SignupForm
