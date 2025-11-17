@@ -23,7 +23,7 @@ export const signup = async (req, res) => {
       [name, email, hashed, role],
       (err, data) => {
         if (err) {
-          console.log(err);  // debug
+          console.log(err);  
           return res.status(500).json({ message: "Error creating user" });
         }
         return res.status(201).json({ message: "Signup successful" });
