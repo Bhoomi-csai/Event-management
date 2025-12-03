@@ -1,0 +1,282 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.homepage-container {
+  width: 100%;
+  min-height: 100vh;
+  font-family: "Poppins", sans-serif;
+  background: #ffffff; 
+  overflow-x: hidden;
+  padding: 0; 
+}
+
+.navbar {
+  width: 100%;
+  padding: 20px 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 20;
+  background: linear-gradient(
+  135deg,
+  rgba(0, 107, 255, 0.95),
+  rgba(71, 54, 255, 0.95),
+  rgba(155, 69, 255, 0.95),
+  rgba(255, 80, 150, 0.95)
+);
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);  position: relative;
+  height: auto;
+}
+.navbar-buttons button {
+  margin-left: 12px;
+  padding: 10px 22px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  font-size: 16px;
+  transition: 0.2s ease-in-out;
+}
+
+.btn-login {
+  background: transparent;
+  border: 2px solid white;
+  color: white;
+}
+
+.btn-signup {
+  background:transparent;
+  color: white;
+  border: 2px solid white;
+}
+
+.btn-login:hover {
+  background: white;
+  color: #4f46e5;
+  opacity: 0.9;
+}
+
+.btn-signup:hover {
+  opacity: 0.9;
+  background: white;
+  color: #4f46e5;
+}
+
+
+
+.hero-section {
+  width: 100%;
+  position: relative;
+
+  padding: 160px 0 120px;
+  min-height: 560px;
+
+  background: url("/hero-bg.png");
+  color: white;
+  overflow: hidden; 
+}
+
+.hero-content {
+  max-width: 650px;
+  margin-left: 80px;
+}
+
+.hero-content h1 {
+  font-size: 60px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.hero-content p {
+  margin-top: 15px;
+  font-size: 20px;
+  opacity: 0.95;
+}
+
+.hero-buttons { margin-top: 35px; }
+.btn-primary {
+  padding: 14px 28px;
+  background: #ffb347;
+  color: black;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+}
+.btn-primary:hover { opacity: 0.9; }
+.btn-secondary {
+  padding: 14px 28px;
+  margin-left: 12px;
+  background: rgba(255,255,255,0.2);
+  border: 2px solid white;
+  color: white;
+  border-radius: 10px;
+  font-size: 18px;
+  cursor: pointer;
+}
+.btn-secondary:hover { background: rgba(255,255,255,0.3); }
+
+.floating-cards {
+  position: absolute;
+  right: 80px;
+  top: 140px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.card {
+  width: 270px;
+  padding: 20px 25px;
+  border-radius: 18px;
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+  transform: rotate(-3deg);
+  animation: float 3s ease-in-out infinite;
+}
+.card:nth-child(2) { animation-delay: 0.2s; }
+.card:nth-child(3) { animation-delay: 0.4s; }
+.card:nth-child(4) { animation-delay: 0.6s; }
+
+@keyframes float {
+  0% { transform: translateY(0px) rotate(-3deg); }
+  50% { transform: translateY(-12px) rotate(-3deg); }
+  100% { transform: translateY(0px) rotate(-3deg); }
+}
+
+.purple { background: #7b5cff; }
+.pink   { background: #ff4f8b; }
+.blue   { background: #2ea8ff; }
+.yellow { background: #ffb82e; }
+
+.categories-section { padding: 90px 60px; text-align: center; }
+.categories-section h2 { font-size: 34px; font-weight: 700; margin-bottom: 45px; }
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
+  max-width: 1000px;
+  margin: auto;
+}
+.category-box { padding: 45px 0; border-radius: 20px; color: white; font-size: 20px; font-weight: 600; transition: 0.3s ease; cursor: pointer; }
+.category-box:hover { transform: translateY(-6px); box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
+.purple-cat { background: #7b5cff; }
+.pink-cat   { background: #ff4f8b; }
+.blue-cat   { background: #2ea8ff; }
+.yellow-cat { background: #ffb82e; }
+.teal-cat   { background: #2dd4bf; }
+.orange-cat { background: #fb923c; }
+
+.benefits-section { padding: 70px 60px; background: #f1f5f9; text-align: center; }
+.benefits-section h2 { font-size: 32px; font-weight: 700; margin-bottom: 35px; }
+.benefits-grid { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; }
+.benefit-item { background: white; padding: 22px 32px; border-radius: 16px; font-size: 18px; font-weight: 600; box-shadow: 0 5px 18px rgba(0,0,0,0.12); transition: 0.3s ease; }
+.benefit-item:hover { transform: translateY(-6px); }
+
+
+@media (max-width: 900px) {
+  .hero-content { margin-left: 40px; }
+  .hero-content h1 { font-size: 42px; }
+  .floating-cards { display: none; }
+}
+@media (max-width: 600px) {
+  .navbar { padding: 18px 25px; }
+  .hero-content { margin-left: 25px; }
+  .hero-content h1 { font-size: 36px; }
+  .categories-section { padding: 60px 20px; }
+  .benefits-section { padding: 50px 20px; }
+}
+/* ADMIN ADD EVENT BUTTON IN HERO */
+.btn-add-event {
+  padding: 14px 28px;
+  margin-left: 15px; /* small gap */
+  background: linear-gradient(135deg, #6a5cff, #b84dff);
+  color: white;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+  transition: 0.25s ease-in-out;
+}
+
+.btn-add-event:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  opacity: 0.95;
+}
+.user-box {
+  position: relative;
+}
+
+.user-icon {
+  font-size: 35px;
+  cursor: pointer;
+  color: white;
+}
+
+.nav-menu {
+  position: absolute;
+  top: 45px;
+  right: 0;
+  background: white;
+  padding: 12px 16px;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  width: 170px;
+  z-index: 2000;
+}
+
+.nav-menu p {
+  margin: 12px 0;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #333;
+}
+
+.nav-menu p:hover {
+  color: #4f46e5;
+}
+
+.logout {
+  color: red !important;
+}
+.btn-released-event {
+  padding: 14px 28px;
+  margin-left: 15px;
+  background: #6a5cff;
+  color: white;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+  transition: 0.25s ease-in-out;
+}
+
+.btn-released-event:hover {
+  transform: translateY(-3px);
+  opacity: 0.9;
+}
+

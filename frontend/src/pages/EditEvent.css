@@ -1,0 +1,71 @@
+.edit-event-container {
+    max-width: 650px;
+    margin: 60px auto;
+    padding: 40px 50px;
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+    font-family: "Poppins", sans-serif;
+    animation: fadeIn 0.6s ease;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  
+  .edit-event-container h2 {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 30px;
+  }
+  
+  .edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  
+  .edit-form input,
+  .edit-form textarea,
+  .edit-form select {
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 2px solid #e2e8f0;
+    font-size: 16px;
+    background: #f8fafc;
+    outline: none;
+    transition: 0.25s ease;
+  }
+  
+  .edit-form input:focus,
+  .edit-form textarea:focus,
+  .edit-form select:focus {
+    border-color: #6a5cff;
+    background: white;
+    box-shadow: 0 0 8px rgba(123, 92, 255, 0.3);
+  }
+  
+  .edit-form textarea {
+    resize: none;
+    height: 120px;
+  }
+  
+  .save-btn {
+    padding: 14px;
+    width: 100%;
+    background: #6a5cff;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s ease;
+  }
+  
+  .save-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+  }
+  

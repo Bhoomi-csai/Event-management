@@ -1,0 +1,106 @@
+.released-container {
+    padding: 40px 60px;
+    font-family: "Poppins", sans-serif;
+  }
+  
+  .released-title {
+    text-align: center;
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 40px;
+  }
+  
+  .no-events {
+    text-align: center;
+    font-size: 20px;
+    color: #6b7280;
+  }
+  
+  /* GRID */
+  .released-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+  }
+  
+  /* EVENT CARD */
+  .released-card {
+    background: #ffffff;
+    padding: 22px;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+    transition: 0.3s ease;
+    border: 1px solid #e5e7eb;
+  }
+  
+  .released-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .released-img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 12px;
+  }
+  
+  .desc {
+    margin-top: 8px;
+    color: #4b5563;
+  }
+  
+  /* BUTTONS */
+  .released-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+  }
+  
+  .edit-btn,
+  .delete-btn {
+    padding: 10px;
+    width: 48%;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 10px;
+    cursor: pointer;
+    border: none;
+    color: white;
+  }
+  
+  .edit-btn {
+    background: #06b6d4;
+  }
+  
+  .delete-btn {
+    background: #ef4444;
+  }
+  
+  .edit-btn:hover,
+  .delete-btn:hover {
+    opacity: 0.85;
+  }
+  
+  /* PAGINATION */
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+    gap: 10px;
+  }
+  
+  .page-btn {
+    padding: 10px 15px;
+    background: #e2e8f0;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  
+  .page-btn.active {
+    background: #4f46e5;
+    color: white;
+  }
+  

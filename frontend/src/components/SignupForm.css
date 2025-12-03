@@ -7,7 +7,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: url("/Users/bhoomi/Desktop/Event management/frontend/vecteezy_black-grid-line-background_49080261.jpg");
+  background:url("/hero-bg.png") ;
   font-family: "Poppins", sans-serif;
 }
 

@@ -7,6 +7,8 @@ const SignupForm = () => {
     name: "",
     email: "",
     password: "",
+    confirm_password: "",
+
     role: "student",   
   })
 
@@ -86,6 +88,14 @@ const SignupForm = () => {
             onChange={handleChange}
             required
           />
+          <input
+  type="password"
+  name="confirm_password"
+  placeholder="Confirm Password"
+  onChange={handleChange}
+  required
+/>
+
 
           <button type="submit">Sign Up</button>
         </form>

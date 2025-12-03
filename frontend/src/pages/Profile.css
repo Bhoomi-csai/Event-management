@@ -1,0 +1,37 @@
+.profile-container {
+    padding: 50px;
+    font-family: "Poppins", sans-serif;
+    text-align: center;
+  }
+  
+  .profile-card {
+    max-width: 400px;
+    margin: auto;
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+  }
+  
+  .profile-card p {
+    margin: 14px 0;
+    font-size: 18px;
+  }
+  
+  .logout-btn {
+    margin-top: 20px;
+    width: 100%;
+    padding: 12px;
+    background: red;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  
+  .logout-btn:hover {
+    opacity: 0.9;
+  }
+  

@@ -7,14 +7,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: url("/Users/bhoomi/Desktop/Event management/frontend/vecteezy_black-grid-line-background_49080261.jpg");
+  background:url("/hero-bg.png") ;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   font-family: "Poppins", sans-serif;
 }
 
-/* Card Match Signup */
 .login-card {
   background: rgba(191, 191, 191, 0.3);
   width: 380px;
