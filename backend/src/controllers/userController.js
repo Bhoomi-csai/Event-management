@@ -2,7 +2,6 @@ const { prisma } = require("../config/database");
 const { createToken } = require("../utils/auth");
 const bcrypt = require("bcrypt");
 
-
 async function createUserController(req, res) {
   let { name, email, password, role } = req.body;
 
@@ -27,7 +26,7 @@ async function createUserController(req, res) {
         name: name.trim(),
         email: email.trim().toLowerCase(),
         password: hashedPassword,
-        role: role, 
+        role: role,
       },
       select: {
         id: true,
@@ -87,7 +86,6 @@ async function loginUserController(req, res) {
   }
 }
 
-
 async function logoutUserController(req, res) {
   try {
     return res.status(200).json({ message: "Logout successful" });
@@ -96,7 +94,6 @@ async function logoutUserController(req, res) {
     return res.status(500).json({ ERROR: "Logout failed" });
   }
 }
-
 
 async function getMeController(req, res) {
   try {
@@ -108,7 +105,6 @@ async function getMeController(req, res) {
         email: true,
         role: true,
         phone: true,
-        image: true,
         roll: true,
         department: true,
         year: true,
@@ -117,8 +113,8 @@ async function getMeController(req, res) {
         designation: true,
         office: true,
         createdAt: true,
-        updatedAt: true
-      }
+        updatedAt: true,
+      },
     });
 
     return res.json({ user });
@@ -129,8 +125,6 @@ async function getMeController(req, res) {
   }
 }
 
-
-
 async function updateUserController(req, res) {
   try {
     const userId = req.user.id;
@@ -138,7 +132,6 @@ async function updateUserController(req, res) {
     let {
       name,
       phone,
-      image,
       roll,
       department,
       year,
@@ -151,14 +144,13 @@ async function updateUserController(req, res) {
     const updateData = {
       name,
       phone,
-      image,
       roll,
       department,
       year,
       skills,
       about,
       designation,
-      office
+      office,
     };
 
     Object.keys(updateData).forEach(
@@ -174,7 +166,6 @@ async function updateUserController(req, res) {
         email: true,
         role: true,
         phone: true,
-        image: true,
         roll: true,
         department: true,
         year: true,
@@ -183,19 +174,19 @@ async function updateUserController(req, res) {
         designation: true,
         office: true,
         createdAt: true,
-        updatedAt: true
-      }
+        updatedAt: true,
+      },
     });
 
     return res.status(200).json({
       message: "Profile updated successfully",
-      user: updatedUser
+      user: updatedUser,
     });
 
   } catch (err) {
     console.error("UpdateUser error:", err);
     return res.status(500).json({
-      ERROR: "Internal Server Error while updating user"
+      ERROR: "Internal Server Error while updating user",
     });
   }
 }

@@ -1,22 +1,53 @@
+// src/components/Profile.js
 import React, { useEffect, useState } from "react";
 import "./Profile.css";
 import { FaUserCircle } from "react-icons/fa";
+import { getMe, updateUser } from "../api"; // adjust path if api.js is elsewhere
 
 const Profile = () => {
   const [user, setUser] = useState(null);
   const [editMode, setEditMode] = useState(false);
-  const [preview, setPreview] = useState(null);
 
   const token = localStorage.getItem("token");
 
   const loadProfile = async () => {
-    try {
-      const res = await fetch("http://localhost:5001/api/users/me", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+    if (!token) {
+      console.error("No token found. Redirecting to login.");
+      localStorage.clear();
+      window.location.href = "/";
+      return;
+    }
 
-      const data = await res.json();
-      if (data.user) setUser(data.user);
+    try {
+      const res = await getMe(token);
+
+      // res.ok comes from safeJSON wrapper
+      if (!res.ok) {
+        console.error("Failed to load profile. Status:", res.status, res.ERROR || res.raw);
+        if (res.status === 401) {
+          // Unauthorized → token invalid/expired
+          localStorage.clear();
+          window.location.href = "/";
+        }
+        return;
+      }
+
+      // backend might return { user: { ... } } or directly fields depending on implementation
+      const loadedUser = res.user || res.data || res;
+      // normalize: if safeJSON returned user inside object, use that
+      if (loadedUser && loadedUser.user) {
+        setUser(loadedUser.user);
+      } else if (res.user) {
+        setUser(res.user);
+      } else if (res.name || res.email) {
+        // res itself is the user object
+        setUser(res);
+      } else {
+        // fallback: try res.data.user or res.data
+        if (res.data && res.data.user) setUser(res.data.user);
+        else if (res.data) setUser(res.data);
+        else console.warn("Couldn't parse user from response", res);
+      }
     } catch (err) {
       console.error("Error loading profile:", err);
     }
@@ -24,52 +55,65 @@ const Profile = () => {
 
   useEffect(() => {
     loadProfile();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleChange = (e) => {
-    setUser({ ...user, [e.target.name]: e.target.value });
-  };
-
-  const uploadImage = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    setPreview(URL.createObjectURL(file)); 
-
-    const formData = new FormData();
-    formData.append("image", file);
-
-    const res = await fetch(
-      "http://localhost:5001/api/upload/profile-picture",
-      {
-        method: "POST",
-        headers: { Authorization: `Bearer ${token}` },
-        body: formData,
-      }
-    );
-
-    const data = await res.json();
-    setUser({ ...user, image: data.imageUrl });
+    const { name, value } = e.target;
+    setUser((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   const saveProfile = async () => {
-    try {
-      const res = await fetch("http://localhost:5001/api/users/update", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(user),
-      });
+    if (!user) return;
 
-      const data = await res.json();
+    // Only send fields backend expects (no image, no id/email/role/etc.)
+    const {
+      name,
+      phone,
+      roll,
+      department,
+      year,
+      skills,
+      about,
+      designation,
+      office,
+    } = user;
+
+    const payload = {
+      name,
+      phone,
+      roll,
+      department,
+      year,
+      skills,
+      about,
+      designation,
+      office,
+    };
+
+    try {
+      const res = await updateUser(payload, token);
+
+      if (!res.ok) {
+        console.error("Error updating profile:", res);
+        alert(res.ERROR || res.message || "Failed to update profile");
+        return;
+      }
+
       alert("Profile updated successfully!");
       setEditMode(false);
       loadProfile();
     } catch (err) {
       console.error("Error saving profile:", err);
+      alert("Something went wrong while saving profile");
     }
+  };
+
+  const notifyPhotoComingSoon = () => {
+    alert("Profile photo upload will be added soon!");
   };
 
   if (!user) return <div className="loading">Loading profile...</div>;
@@ -77,20 +121,16 @@ const Profile = () => {
   return (
     <div className="profile-page">
       <div className="profile-header">
-        {preview ? (
-          <img src={preview} className="profile-avatar-img" alt="Preview" />
-        ) : user.image ? (
+        {user.image ? (
           <img src={user.image} className="profile-avatar-img" alt="Profile" />
         ) : (
           <FaUserCircle className="profile-avatar" />
         )}
 
-        {editMode && (
-          <label className="upload-label">
-            Change Photo
-            <input type="file" accept="image/*" onChange={uploadImage} />
-          </label>
-        )}
+        {/* Button kept same – just shows alert, no upload logic */}
+        <button className="change-photo-btn" onClick={notifyPhotoComingSoon}>
+          Change Photo
+        </button>
 
         <h1 className="profile-name">{user.name}</h1>
         <p className="role-tag">{user.role}</p>
@@ -100,7 +140,6 @@ const Profile = () => {
         <h2 className="section-title">Profile Information</h2>
 
         <div className="profile-grid">
-
           <div className="field-box full">
             <label>Name</label>
             <input
@@ -113,7 +152,7 @@ const Profile = () => {
 
           <div className="field-box full">
             <label>Email</label>
-            <input value={user.email} disabled />
+            <input value={user.email || ""} disabled />
           </div>
 
           <div className="field-box full">
@@ -244,8 +283,13 @@ const Profile = () => {
             </>
           ) : (
             <>
-              <button className="save-btn" onClick={saveProfile}>Save</button>
-              <button className="cancel-btn" onClick={() => setEditMode(false)}>
+              <button className="save-btn" onClick={saveProfile}>
+                Save
+              </button>
+              <button
+                className="cancel-btn"
+                onClick={() => setEditMode(false)}
+              >
                 Cancel
               </button>
             </>

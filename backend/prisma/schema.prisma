@@ -24,16 +24,15 @@ model User {
   password  String
   role      Role
 
-  // ---------- PROFILE FIELDS ----------
+  // PROFILE FIELDS (image removed)
   phone       String?
-  image       String?
-  roll        String?       // Student College ID / Roll number
-  department  String?       // Student/Admin department
-  year        String?       // Student year/semester
-  skills      String?       // Comma-separated list
-  about       String?       // About student/admin
-  designation String?       // ADMIN only (Coordinator, HOD, Club Head)
-  office      String?       // ADMIN office room number
+  roll        String?
+  department  String?
+  year        String?
+  skills      String?
+  about       String?
+  designation String?
+  office      String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -47,18 +46,18 @@ model Event {
   id          Int        @id @default(autoincrement())
   title       String
   description String?
-  image       String?
+  image       String?     // KEEP? (If you want to remove event image too, tell me)
   location    String
   date        DateTime
   startTime   String?
   endTime     String?
+  category    String?
 
   createdAt   DateTime   @default(now())
+  
+  createdBy Int
+  admin     User @relation("AdminEvents", fields: [createdBy], references: [id], onDelete: Cascade)
 
-  createdBy   Int
-  category    String?    
-
-  admin       User       @relation("AdminEvents", fields: [createdBy], references: [id], onDelete: Cascade)
   registrations Registration[]
 
   @@index([createdBy])

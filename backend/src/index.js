@@ -22,7 +22,7 @@ app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 app.use("/api/users", userRoutes);
 app.use("/api/events", eventRoutes);
 app.use("/api/registrations", registrationRoutes);
-app.use("/api/upload", uploadRoutes);  // ⭐ profile picture upload
+app.use("/api/upload", uploadRoutes);
 
 
 app.get("/", (req, res) => {
