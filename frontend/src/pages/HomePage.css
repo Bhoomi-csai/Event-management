@@ -83,7 +83,7 @@ html, body, #root {
   padding: 160px 0 120px;
   min-height: 560px;
 
-  background: url("/hero-bg.png");
+  background: url("/Users/bhoomi/Desktop/Event management/frontend/public/hero-bg.png");
   color: white;
   overflow: hidden; 
 }
