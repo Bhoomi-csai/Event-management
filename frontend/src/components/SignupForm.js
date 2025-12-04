@@ -11,29 +11,52 @@ const SignupForm = () => {
     email: "",
     password: "",
     confirm_password: "",
-    role: "student",
+    role: "STUDENT", // store uppercase to match backend (optional)
   });
 
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData((p) => ({ ...p, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const result = await signupUser(formData);
+    // client validation
+    if (formData.password !== formData.confirm_password) {
+      setMessage("Passwords do not match");
+      return;
+    }
+    if (!formData.name || !formData.email || !formData.password) {
+      setMessage("Please fill all required fields");
+      return;
+    }
 
-    if (result.message === "User registered successfully") {
+    setLoading(true);
+    setMessage("");
+
+    const result = await signupUser({
+      name: formData.name,
+      email: formData.email,
+      password: formData.password,
+      role: formData.role, // already uppercase
+    });
+
+    setLoading(false);
+
+    if (result.ok && result.message === "User registered successfully") {
       setMessage("Signup successful! Redirecting...");
-      
-      setTimeout(() => {
-        navigate("/login");  
-      }, 1200);
+      // small delay for UX only
+      setTimeout(() => navigate("/login"), 900);
     } else {
-      setMessage(result.ERROR || result.message || "Something went wrong");
+      // Show best error we have
+      setMessage(
+        result.ERROR || result.message || result.raw || "Something went wrong"
+      );
+      console.warn("Signup failed:", result);
     }
   };
 
@@ -48,8 +71,8 @@ const SignupForm = () => {
             <input
               type="radio"
               name="role"
-              value="admin"
-              checked={formData.role === "admin"}
+              value="ADMIN"
+              checked={formData.role === "ADMIN"}
               onChange={handleChange}
             />
             Admin
@@ -59,8 +82,8 @@ const SignupForm = () => {
             <input
               type="radio"
               name="role"
-              value="student"
-              checked={formData.role === "student"}
+              value="STUDENT"
+              checked={formData.role === "STUDENT"}
               onChange={handleChange}
             />
             Student
@@ -72,6 +95,7 @@ const SignupForm = () => {
             type="text"
             name="name"
             placeholder="Full Name"
+            value={formData.name}
             onChange={handleChange}
             required
           />
@@ -80,6 +104,7 @@ const SignupForm = () => {
             type="email"
             name="email"
             placeholder="Email Address"
+            value={formData.email}
             onChange={handleChange}
             required
           />
@@ -88,6 +113,7 @@ const SignupForm = () => {
             type="password"
             name="password"
             placeholder="Password"
+            value={formData.password}
             onChange={handleChange}
             required
           />
@@ -96,11 +122,14 @@ const SignupForm = () => {
             type="password"
             name="confirm_password"
             placeholder="Confirm Password"
+            value={formData.confirm_password}
             onChange={handleChange}
             required
           />
 
-          <button type="submit">Sign Up</button>
+          <button type="submit" disabled={loading}>
+            {loading ? "Signing up..." : "Sign Up"}
+          </button>
         </form>
 
         {message && <p className="message">{message}</p>}
