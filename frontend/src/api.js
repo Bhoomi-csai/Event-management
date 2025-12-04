@@ -1,8 +1,10 @@
-const API_URL = "http://localhost:5001/api";
+const API_URL =
+  process.env.REACT_API_BACKEND_SERVER_URL ||
+  process.env.REACT_API_BACKEND_LOCAL_URL;
 
 export const signupUser = async (userData) => {
   try {
-    const response = await fetch(`${API_URL}/users/register`, {
+    const response = await fetch(`${API_URL}/api/users/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -17,10 +19,9 @@ export const signupUser = async (userData) => {
   }
 };
 
-
 export const loginUser = async (credentials) => {
   try {
-    const response = await fetch(`${API_URL}/users/login`, {
+    const response = await fetch(`${API_URL}/api/users/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(credentials),
@@ -31,13 +32,15 @@ export const loginUser = async (credentials) => {
     return { message: "Network error" };
   }
 };
+
+// ---------- REGISTER FOR EVENT ----------
 export const registerForEvent = async (eventId) => {
   try {
-    const response = await fetch("http://localhost:5001/api/registrations/register", {
+    const response = await fetch(`${API_URL}/api/registrations/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: localStorage.getItem("token"), 
+        Authorization: localStorage.getItem("token"),
       },
       body: JSON.stringify({ eventId }),
     });
@@ -47,4 +50,3 @@ export const registerForEvent = async (eventId) => {
     return { ERROR: "Network error" };
   }
 };
-
