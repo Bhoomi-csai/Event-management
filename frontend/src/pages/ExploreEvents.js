@@ -18,7 +18,6 @@ const ExploreEvents = () => {
   const token = localStorage.getItem("token");
   const role = localStorage.getItem("role");
 
-  // Categories that should NOT show registration
   const noRegistrationCategories = [
     "cultural",
     "cultural event",
@@ -30,7 +29,6 @@ const ExploreEvents = () => {
     "tech event",
   ];
 
-  // FETCH ALL EVENTS
   const loadEvents = async () => {
     const params = new URLSearchParams({
       page,
@@ -48,7 +46,6 @@ const ExploreEvents = () => {
     setTotalEvents(data.total || 0);
   };
 
-  // FETCH STUDENT REGISTERED EVENT IDs
   const loadRegisteredEvents = async () => {
     if (role !== "STUDENT" || !token) return;
 
@@ -64,13 +61,11 @@ const ExploreEvents = () => {
     setRegisteredEvents(ids);
   };
 
-  // Auto refresh when pages or filters change
   useEffect(() => {
     loadEvents();
     loadRegisteredEvents();
   }, [page, searchTerm, categoryFilter]);
 
-  // Listen for unregister signal from MyRegistrations.jsx
   useEffect(() => {
     const listener = (e) => {
       if (e.key === "refresh-registrations") {
@@ -84,7 +79,6 @@ const ExploreEvents = () => {
 
   const totalPages = Math.ceil(totalEvents / limit);
 
-  // Logic to determine if event needs registration
   const eventNeedsRegistration = (category) => {
     if (!category) return true;
     return !noRegistrationCategories.includes(category.toLowerCase());
@@ -94,7 +88,6 @@ const ExploreEvents = () => {
     <div className="explore-container">
       <h1 className="explore-title">Explore All Events</h1>
 
-      {/* SEARCH + FILTER */}
       <div className="explore-controls">
         <input
           type="text"
@@ -123,7 +116,6 @@ const ExploreEvents = () => {
         </select>
       </div>
 
-      {/* EVENTS GRID */}
       <div className="events-grid">
         {events.map((event) => (
           <div key={event.id} className="event-card">
@@ -146,7 +138,6 @@ const ExploreEvents = () => {
 
             <p className="event-cat"><b>Category:</b> {event.category}</p>
 
-            {/* STUDENT REGISTER UI */}
             {role === "STUDENT" && eventNeedsRegistration(event.category) && (
 
               registeredEvents.includes(event.id) ? (
@@ -191,7 +182,6 @@ const ExploreEvents = () => {
         ))}
       </div>
 
-      {/* PAGINATION */}
       <div className="pagination">
         {Array.from({ length: totalPages }, (_, i) => (
           <button

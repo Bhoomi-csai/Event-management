@@ -9,7 +9,7 @@ const ReleasedEvents = () => {
 
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
-  const limit = 7;
+  const limit = 8;
 
   const loadEvents = async () => {
     try {
@@ -44,7 +44,6 @@ const ReleasedEvents = () => {
 
     alert(result.message || result.ERROR);
 
-    // refresh list
     loadEvents();
   };
 
@@ -82,14 +81,14 @@ const ReleasedEvents = () => {
                   className="edit-btn"
                   onClick={() => navigate(`/edit-event/${event.id}`)}
                 >
-                  ✏ Edit
+                   Edit
                 </button>
 
                 <button
                   className="delete-btn"
                   onClick={() => handleDelete(event.id)}
                 >
-                  🗑 Delete
+                   Delete
                 </button>
               </div>
             </div>

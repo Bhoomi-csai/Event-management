@@ -1,0 +1,54 @@
+
+.event-students-container {
+    padding: 40px 60px;
+    font-family: "Poppins", sans-serif;
+  }
+  
+  .event-students-container h1 {
+    text-align: center;
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: #333;
+  }
+  
+  .students-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 22px rgba(0, 0, 0, 0.12);
+    background: white;
+  }
+  
+  .students-table th {
+    padding: 14px;
+    background: #6a5cff;
+    color: white;
+    text-align: left;
+    font-size: 16px;
+    font-weight: 600;
+  }
+  
+  .students-table td {
+    padding: 14px;
+    font-size: 15px;
+    color: #333;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  
+  .students-table tr:nth-child(even) {
+    background: #f9f9ff;
+  }
+  
+  .students-table td[colspan] {
+    text-align: center;
+    padding: 25px;
+    font-size: 16px;
+    color: #777;
+  }
+  
+  .students-table tr:hover {
+    background: #f3f0ff;
+  }
+  

@@ -1,14 +1,7 @@
-/* PAGE CONTAINER */
+
 .explore-container {
   padding: 40px 60px;
   font-family: "Poppins", sans-serif;
-  background: linear-gradient(
-  135deg,
-  rgba(0, 107, 255, 0.95),
-  rgba(71, 54, 255, 0.95),
-  rgba(155, 69, 255, 0.95),
-  rgba(255, 80, 150, 0.95)
-);
 }
 
 .explore-title {
@@ -19,14 +12,12 @@
   color: white;
 }
 
-/* GRID — side by side square boxes */
 .events-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 30px;
 }
 
-/* EVENT BOX / CARD */
 .event-card {
   background: beige;
   padding: 22px;
@@ -67,7 +58,6 @@
   margin-bottom: 15px;
 }
 
-/* STUDENT BUTTON */
 .btn-register {
   width: 100%;
   padding: 10px;
@@ -84,7 +74,6 @@
   opacity: 0.85;
 }
 
-/* ADMIN BUTTONS */
 .admin-buttons {
   display: flex;
   justify-content: space-between;
@@ -120,7 +109,6 @@
   opacity: 0.85;
 }
 
-/* PAGINATION */
 .pagination {
   display: flex;
   justify-content: center;
@@ -146,7 +134,6 @@
   background: #4f46e5;
   color: white;
 }
-/* SEARCH & FILTER BAR */
 .explore-controls {
   display: flex;
   justify-content: center;
@@ -184,7 +171,7 @@
 .btn-registered {
   width: 100%;
   padding: 10px;
-  background: #10b981; /* green */
+  background: #10b981; 
   color: white;
   border: none;
   border-radius: 10px;

@@ -1,38 +1,41 @@
-import React, { useState } from "react"
-import { signupUser } from "../api"
-import "./SignupForm.css"
+import React, { useState } from "react";
+import { signupUser } from "../api";
+import { useNavigate } from "react-router-dom";
+import "./SignupForm.css";
 
 const SignupForm = () => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
     confirm_password: "",
+    role: "student",
+  });
 
-    role: "student",   
-  })
-
-  const [message, setMessage] = useState("")
+  const [message, setMessage] = useState("");
 
   const handleChange = (e) => {
-    const { name, value } = e.target
-    setFormData({ ...formData, [name]: value })
-  }
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    const result = await signupUser(formData)
+    const result = await signupUser(formData);
 
-    if (result.message === "Signup successful") {
-      setMessage("Signup successful! Redirecting...")
+    if (result.message === "User registered successfully") {
+      setMessage("Signup successful! Redirecting...");
+      
       setTimeout(() => {
-        window.location.href = "/login"
-      }, 1200)
+        navigate("/login");  
+      }, 1200);
     } else {
-      setMessage(result.message || "Something went wrong")
+      setMessage(result.ERROR || result.message || "Something went wrong");
     }
-  }
+  };
 
   return (
     <div className="signup-container">
@@ -88,14 +91,14 @@ const SignupForm = () => {
             onChange={handleChange}
             required
           />
-          <input
-  type="password"
-  name="confirm_password"
-  placeholder="Confirm Password"
-  onChange={handleChange}
-  required
-/>
 
+          <input
+            type="password"
+            name="confirm_password"
+            placeholder="Confirm Password"
+            onChange={handleChange}
+            required
+          />
 
           <button type="submit">Sign Up</button>
         </form>
@@ -107,7 +110,7 @@ const SignupForm = () => {
         </p>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SignupForm
+export default SignupForm;

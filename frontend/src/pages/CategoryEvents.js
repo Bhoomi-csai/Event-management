@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import "./ExploreEvents.css"; 
 
 const CategoryEvents = () => {
   const { categoryName } = useParams();
@@ -22,8 +23,8 @@ const CategoryEvents = () => {
   }, [categoryName]);
 
   return (
-    <div style={{ padding: "25px" }}>
-      <h1>{categoryName.toUpperCase()} EVENTS</h1>
+    <div className="explore-container">
+      <h1 className="explore-title">{categoryName.toUpperCase()} EVENTS</h1>
 
       <div className="events-grid">
         {events.length === 0 ? (
@@ -31,37 +32,41 @@ const CategoryEvents = () => {
         ) : (
           events.map((event) => (
             <div key={event.id} className="event-card">
-              <h3>{event.title}</h3>
-              <p>{new Date(event.date).toLocaleDateString()}</p>
-              <p>{event.description}</p>
 
-              {/* STUDENT REGISTER */}
+              {event.image && (
+                <img src={event.image} alt="" className="event-img" />
+              )}
+
+              <h3>{event.title}</h3>
+
+              <p className="event-date">
+                <b>Date:</b> {new Date(event.date).toLocaleDateString()}
+              </p>
+
+              <p><b>Location:</b> {event.location}</p>
+
+              {event.startTime && event.endTime && (
+                <p><b>Time:</b> {event.startTime} - {event.endTime}</p>
+              )}
+
+              <p className="event-desc">{event.description}</p>
+
+              <p className="event-cat">
+                <b>Category:</b> {event.category}
+              </p>
+
               {role === "STUDENT" && (
                 <button
+                  className="btn-register"
                   onClick={() => {
                     if (!token) return navigate("/login");
-                    alert("Registration logic coming soon!");
+                    alert("Registration feature coming soon!");
                   }}
                 >
                   Register
                 </button>
               )}
 
-              {/* ADMIN EDIT/DELETE */}
-              {role === "ADMIN" && (
-                <>
-                  <button
-                    onClick={() => navigate(`/edit-event/${event.id}`)}
-                  >
-                    ✏️ Edit
-                  </button>
-                  <button
-                    onClick={() => navigate(`/delete-event/${event.id}`)}
-                  >
-                    🗑 Delete
-                  </button>
-                </>
-              )}
             </div>
           ))
         )}

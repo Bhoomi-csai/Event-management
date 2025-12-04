@@ -30,7 +30,6 @@ const MyRegistrations = () => {
     if (result.message) {
       alert("You have unregistered from this event.");
 
-      // 🔥 Notify ExploreEvents.jsx
       localStorage.setItem("refresh-registrations", Date.now());
 
       loadRegistrations();
@@ -68,7 +67,7 @@ const MyRegistrations = () => {
                 className="unregister-btn"
                 onClick={() => handleWithdraw(reg.id)}
               >
-                ❌ Unregister
+                 Unregister
               </button>
             </div>
           ))

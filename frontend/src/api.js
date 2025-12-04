@@ -1,6 +1,5 @@
 const API_URL = "http://localhost:5001/api";
 
-// ================== SIGNUP ==================
 export const signupUser = async (userData) => {
   try {
     const response = await fetch(`${API_URL}/users/register`, {
@@ -19,7 +18,6 @@ export const signupUser = async (userData) => {
 };
 
 
-// ================== LOGIN ==================
 export const loginUser = async (credentials) => {
   try {
     const response = await fetch(`${API_URL}/users/login`, {
@@ -39,7 +37,7 @@ export const registerForEvent = async (eventId) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: localStorage.getItem("token"), // Bearer token
+        Authorization: localStorage.getItem("token"), 
       },
       body: JSON.stringify({ eventId }),
     });

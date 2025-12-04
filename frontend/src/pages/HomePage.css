@@ -83,7 +83,7 @@ html, body, #root {
   padding: 160px 0 120px;
   min-height: 560px;
 
-  background: url("/Users/bhoomi/Desktop/Event management/frontend/public/hero-bg.png");
+  background: url("../assets/hero-bg.png");
   color: white;
   overflow: hidden; 
 }
@@ -279,4 +279,78 @@ html, body, #root {
   transform: translateY(-3px);
   opacity: 0.9;
 }
+.btn-registration-overview {
+  padding: 14px 28px;
+  margin-left: 15px;
+  background: #6a5cff;  /* green */
+  color: white;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+  transition: 0.25s ease-in-out;
+}
+
+.btn-registration-overview:hover {
+  transform: translateY(-3px);
+  opacity: 0.9;
+}
+.btn-register-event{
+  padding: 14px 28px;
+  margin-left: 15px;
+  background:#ffb347;  
+  color: black;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+  transition: 0.25s ease-in-out;
+}
+.about-section {
+  padding: 60px 40px;
+  text-align: center;
+  background: #f8f9ff;
+  margin-top: 40px;
+}
+
+.about-section h2 {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.about-text {
+  max-width: 780px;
+  margin: auto;
+  font-size: 18px;
+  opacity: 0.85;
+  line-height: 1.6;
+  margin-bottom: 40px;
+}
+
+.about-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 25px;
+}
+
+.about-box {
+  padding: 22px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.08);
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+.about-box p {
+  margin-top: 6px;
+  opacity: 0.9;
+}
+
+
 

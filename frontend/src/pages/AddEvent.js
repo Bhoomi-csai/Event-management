@@ -35,7 +35,7 @@ const AddEvent = () => {
       },
       body: JSON.stringify({
         ...eventData,
-        date: eventData.date, // Already YYYY-MM-DD (browser date input)
+        date: eventData.date, 
         category: eventData.category.toLowerCase(),
       }),
     });

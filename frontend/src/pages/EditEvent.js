@@ -18,7 +18,6 @@ const EditEvent = () => {
 
   const token = localStorage.getItem("token");
 
-  // Load existing event data
   const fetchEvent = async () => {
     const response = await fetch(`http://localhost:5001/api/events/${id}`);
     const data = await response.json();
@@ -40,13 +39,11 @@ const EditEvent = () => {
     fetchEvent();
   }, [id]);
 
-  // Handle form input
   const handleChange = (e) => {
     const { name, value } = e.target;
     setEventData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Update event
   const handleSubmit = async (e) => {
     e.preventDefault();
 

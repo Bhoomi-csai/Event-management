@@ -11,11 +11,11 @@ import CategoryEvents from "./pages/CategoryEvents";
 import ReleasedEvents from "./pages/ReleasedEvents";
 import MyRegistrations from "./pages/MyRegistrations";
 import Profile from "./pages/Profile";
-import EditEvent from "./pages/EditEvent"; // if you create it
+import EditEvent from "./pages/EditEvent";
+import RegisteredEventsDashboard from "./pages/RegisteredEventsDashboard";  
+import EventRegistrations from "./pages/EventRegistrations";               
 
-/* ================================
-   ROUTE GUARDS
-================================ */
+
 
 const PrivateRoute = ({ children }) => {
   const token = localStorage.getItem("token");
@@ -32,16 +32,13 @@ const StudentRoute = ({ children }) => {
   return role === "STUDENT" ? children : <Navigate to="/" />;
 };
 
-/* ================================
-   APP ROUTES
-================================ */
+
 
 function App() {
   return (
     <Router>
       <Routes>
 
-        {/* ---------- PUBLIC ROUTES ---------- */}
         <Route path="/" element={<HomePage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/login" element={<LoginPage />} />
@@ -49,7 +46,6 @@ function App() {
         <Route path="/explore" element={<ExploreEvents />} />
         <Route path="/category/:categoryName" element={<CategoryEvents />} />
 
-        {/* ---------- COMMON LOGGED-IN ROUTES ---------- */}
         <Route
           path="/profile"
           element={
@@ -59,7 +55,6 @@ function App() {
           }
         />
 
-        {/* ---------- STUDENT DASHBOARD ROUTES ---------- */}
         <Route
           path="/my-registrations"
           element={
@@ -69,7 +64,6 @@ function App() {
           }
         />
 
-        {/* ---------- ADMIN DASHBOARD ROUTES ---------- */}
         <Route
           path="/add-event"
           element={
@@ -89,6 +83,24 @@ function App() {
         />
 
         <Route
+          path="/admin/registrations"
+          element={
+            <AdminRoute>
+              <RegisteredEventsDashboard />
+            </AdminRoute>
+          }
+        />
+
+        <Route
+          path="/admin/event/:eventId/registrations"
+          element={
+            <AdminRoute>
+              <EventRegistrations />
+            </AdminRoute>
+          }
+        />
+
+        <Route
           path="/edit-event/:id"
           element={
             <AdminRoute>
@@ -97,7 +109,6 @@ function App() {
           }
         />
 
-        {/* 404 fallback */}
         <Route path="*" element={<Navigate to="/" />} />
 
       </Routes>

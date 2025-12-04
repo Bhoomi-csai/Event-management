@@ -7,7 +7,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background:url("/Users/bhoomi/Desktop/Event management/frontend/public/hero-bg.png") ;
+  background:url("../assets/hero-bg.png") ;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -38,7 +38,6 @@
   font-size: 14px;
 }
 
-/* Input same as signup */
 .login-card input {
   width: 90%;
   padding: 12px;
@@ -55,7 +54,6 @@
   border-color: #2563eb;
 }
 
-/* Button same feel as signup */
 .login-card button {
   width: 100%;
   padding: 12px;
@@ -97,7 +95,6 @@
   text-decoration: underline;
 }
 
-/* Same animations */
 @keyframes fadeIn {
   from {
     opacity: 0;

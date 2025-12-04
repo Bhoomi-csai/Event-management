@@ -1,4 +1,3 @@
-/* Reset + Root */
 html,
 body,
 #root {
@@ -7,7 +6,6 @@ body,
   padding: 0;
 }
 
-/* Remove CRA default styles */
 .App {
   width: 100%;
   min-height: 100vh;
@@ -17,7 +15,6 @@ body,
   align-items: center;
 }
 
-/* Prevent logo animation leftovers */
 .App-logo {
   display: none;
 }

@@ -7,7 +7,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background:url("/Users/bhoomi/Desktop/Event management/frontend/public/hero-bg.png") ;
+  background:url("../assets/hero-bg.png") ;
   font-family: "Poppins", sans-serif;
 }
 
