@@ -112,9 +112,7 @@ const Profile = () => {
     }
   };
 
-  const notifyPhotoComingSoon = () => {
-    alert("Profile photo upload will be added soon!");
-  };
+  
 
   if (!user) return <div className="loading">Loading profile...</div>;
 
@@ -128,9 +126,7 @@ const Profile = () => {
         )}
 
         {/* Button kept same – just shows alert, no upload logic */}
-        <button className="change-photo-btn" onClick={notifyPhotoComingSoon}>
-          Change Photo
-        </button>
+        
 
         <h1 className="profile-name">{user.name}</h1>
         <p className="role-tag">{user.role}</p>
