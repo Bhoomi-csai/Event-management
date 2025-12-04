@@ -1,8 +1,6 @@
 const { prisma } = require("../config/database");
 
-/* ============================================================
-   STUDENT → REGISTER FOR EVENT
-============================================================ */
+
 async function registerForEventController(req, res) {
   try {
     const student = req.user;
@@ -12,7 +10,6 @@ async function registerForEventController(req, res) {
       return res.status(400).json({ ERROR: "eventId is required" });
     }
 
-    // Only students can register
     if (student.role !== "STUDENT") {
       return res.status(403).json({ ERROR: "Only students can register for events" });
     }
@@ -25,7 +22,6 @@ async function registerForEventController(req, res) {
       return res.status(404).json({ ERROR: "Event not found" });
     }
 
-    // Prevent duplicate registration
     const existing = await prisma.registration.findUnique({
       where: {
         eventId_userId: {
@@ -61,9 +57,7 @@ async function registerForEventController(req, res) {
   }
 }
 
-/* ============================================================
-   ADMIN → VIEW REGISTRATIONS FOR AN EVENT
-============================================================ */
+
 async function getEventRegistrationsController(req, res) {
   try {
     const admin = req.user;
@@ -81,7 +75,6 @@ async function getEventRegistrationsController(req, res) {
       return res.status(404).json({ ERROR: "Event not found" });
     }
 
-    // Only the admin who created the event can view registrations
     if (event.createdBy !== admin.id) {
       return res.status(403).json({ ERROR: "You cannot view another admin's event registrations" });
     }
@@ -102,9 +95,7 @@ async function getEventRegistrationsController(req, res) {
   }
 }
 
-/* ============================================================
-   STUDENT → VIEW MY REGISTRATIONS
-============================================================ */
+
 async function getMyRegistrationsController(req, res) {
   try {
     const student = req.user;
@@ -112,7 +103,7 @@ async function getMyRegistrationsController(req, res) {
     const registrations = await prisma.registration.findMany({
       where: { 
         userId: student.id,
-        status: "REGISTERED"   // ⭐ ONLY RETURN ACTIVE REGISTRATIONS
+        status: "REGISTERED" 
       },
       orderBy: { createdAt: "desc" },
       include: {
@@ -128,9 +119,7 @@ async function getMyRegistrationsController(req, res) {
 }
 
 
-/* ============================================================
-   STUDENT → WITHDRAW REGISTRATION
-============================================================ */
+
 async function withdrawRegistrationController(req, res) {
   try {
     const student = req.user;
@@ -147,7 +136,6 @@ async function withdrawRegistrationController(req, res) {
       return res.status(403).json({ ERROR: "You can only unregister your own event" });
     }
 
-    // DELETE registration entirely
     await prisma.registration.delete({
       where: { id: Number(id) }
     });
@@ -159,11 +147,87 @@ async function withdrawRegistrationController(req, res) {
     return res.status(500).json({ ERROR: "Internal Server Error" });
   }
 }
+async function getAdminEventsWithRegistrations(req, res) {
+  try {
+    const adminId = req.user.id;
+
+    const events = await prisma.event.findMany({
+      where: { createdBy: adminId },
+      include: {
+        registrations: {
+          where: { status: "REGISTERED" }
+        }
+      }
+    });
+
+    const result = events.map(e => ({
+      id: e.id,
+      title: e.title,
+      date: e.date,
+      location: e.location,
+      category: e.category,
+      registrationCount: e.registrations.length
+    }));
+
+    return res.json({ events: result });
+  } catch (err) {
+    console.error("Admin events list error:", err);
+    return res.status(500).json({ ERROR: "Internal Server Error" });
+  }
+}
+async function getEventRegistrationsController(req, res) {
+  try {
+    const adminId = req.user.id;
+    const { eventId } = req.params;
+
+    const event = await prisma.event.findUnique({
+      where: { id: Number(eventId) }
+    });
+
+    if (!event || event.createdBy !== adminId) {
+      return res.status(403).json({ ERROR: "Unauthorized to view this event" });
+    }
+
+    const registrations = await prisma.registration.findMany({
+      where: {
+        eventId: Number(eventId),
+        status: "REGISTERED"
+      },
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+            roll: true,
+            phone: true,
+            email: true
+          }
+        }
+      }
+    });
+    
+    return res.json({
+      event: {
+        title: event.title,
+        date: event.date,
+        location: event.location,
+        category: event.category
+      },
+      students: registrations.map(r => r.user)
+    });
+
+  } catch (err) {
+    console.error("Event registrations error:", err);
+    return res.status(500).json({ ERROR: "Internal Server Error" });
+  }
+}
 
 
 module.exports = {
   registerForEventController,
   getEventRegistrationsController,
   getMyRegistrationsController,
-  withdrawRegistrationController
+  withdrawRegistrationController,
+  getAdminEventsWithRegistrations,
+  getEventRegistrationsController
 };

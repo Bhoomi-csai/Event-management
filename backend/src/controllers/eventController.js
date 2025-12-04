@@ -1,8 +1,6 @@
 const { prisma } = require("../config/database");
 
-/* =============================================================
-   CREATE EVENT (ADMIN ONLY)
-============================================================= */
+
 async function createEventController(req, res) {
   try {
     const adminId = req.user.id;
@@ -28,7 +26,6 @@ async function createEventController(req, res) {
       });
     }
 
-    // Validate date format (YYYY-MM-DD)
     const parsedDate = new Date(date);
     if (isNaN(parsedDate.getTime())) {
       return res
@@ -60,9 +57,7 @@ async function createEventController(req, res) {
   }
 }
 
-/* =============================================================
-   GET ALL EVENTS (SEARCH + FILTER + PAGINATION)
-============================================================= */
+
 async function getAllEventsController(req, res) {
   try {
     const { search, category, page = 1, limit = 10 } = req.query;
@@ -103,10 +98,7 @@ async function getAllEventsController(req, res) {
   }
 }
 
-/* =============================================================
-   GET ADMIN'S RELEASED EVENTS (ADMIN ONLY)
-   Used by ReleasedEvents.jsx
-============================================================= */
+
 async function getAdminEventsController(req, res) {
   try {
     const adminId = req.user.id;
@@ -132,9 +124,6 @@ async function getAdminEventsController(req, res) {
   }
 }
 
-/* =============================================================
-   GET SINGLE EVENT DETAILS
-============================================================= */
 async function getEventByIdController(req, res) {
   try {
     const { id } = req.params;
@@ -162,9 +151,7 @@ async function getEventByIdController(req, res) {
   }
 }
 
-/* =============================================================
-   UPDATE EVENT (ADMIN ONLY)
-============================================================= */
+
 async function updateEventController(req, res) {
   try {
     const adminId = req.user.id;
@@ -231,9 +218,7 @@ async function updateEventController(req, res) {
   }
 }
 
-/* =============================================================
-   DELETE EVENT (ADMIN ONLY)
-============================================================= */
+
 async function deleteEventController(req, res) {
   try {
     const adminId = req.user.id;

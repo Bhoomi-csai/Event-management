@@ -7,12 +7,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 enum Role {
   ADMIN
   STUDENT
 }
 
+enum RegistrationStatus {
+  REGISTERED
+  CANCELLED
+}
 
 model User {
   id        Int      @id @default(autoincrement())
@@ -20,15 +23,25 @@ model User {
   email     String   @unique
   password  String
   role      Role
+
+  // ---------- PROFILE FIELDS ----------
+  phone       String?
+  image       String?
+  roll        String?       // Student College ID / Roll number
+  department  String?       // Student/Admin department
+  year        String?       // Student year/semester
+  skills      String?       // Comma-separated list
+  about       String?       // About student/admin
+  designation String?       // ADMIN only (Coordinator, HOD, Club Head)
+  office      String?       // ADMIN office room number
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  events        Event[]        
-  registrations Registration[] 
+  // RELATIONS
+  events        Event[]        @relation("AdminEvents")
+  registrations Registration[] @relation("UserRegistrations")
 }
-
-
-
 
 model Event {
   id          Int        @id @default(autoincrement())
@@ -45,17 +58,10 @@ model Event {
   createdBy   Int
   category    String?    
 
-  admin       User       @relation(fields: [createdBy], references: [id], onDelete: Cascade)
+  admin       User       @relation("AdminEvents", fields: [createdBy], references: [id], onDelete: Cascade)
   registrations Registration[]
 
   @@index([createdBy])
-}
-
-
-
-enum RegistrationStatus {
-  REGISTERED
-  CANCELLED
 }
 
 model Registration {
@@ -66,9 +72,9 @@ model Registration {
   createdAt DateTime            @default(now())
 
   event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
-  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user  User  @relation("UserRegistrations", fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([eventId, userId]) 
+  @@unique([eventId, userId])
   @@index([eventId])
   @@index([userId])
 }

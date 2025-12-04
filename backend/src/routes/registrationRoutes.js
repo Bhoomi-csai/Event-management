@@ -7,47 +7,39 @@ const {
   registerForEventController,
   getEventRegistrationsController,
   getMyRegistrationsController,
-  withdrawRegistrationController
+  withdrawRegistrationController,
+  getAdminEventsWithRegistrations
 } = require("../controllers/registrationController");
 
-/* ============================================================
-   STUDENT → REGISTER FOR EVENT
-   POST /api/registrations/register
-============================================================ */
+
 router.post(
   "/register",
   authMiddleware,
   registerForEventController
 );
 
-/* ============================================================
-   ADMIN → GET ALL REGISTRATIONS FOR AN EVENT
-   GET /api/registrations/event/:eventId
-============================================================ */
+
 router.get(
   "/event/:eventId",
   authMiddleware,
   getEventRegistrationsController
 );
 
-/* ============================================================
-   STUDENT → GET THEIR OWN REGISTRATIONS
-   GET /api/registrations/me
-============================================================ */
+
 router.get(
   "/me",
   authMiddleware,
   getMyRegistrationsController
 );
 
-/* ============================================================
-   STUDENT → WITHDRAW REGISTRATION
-   DELETE /api/registrations/:id
-============================================================ */
+
 router.delete(
   "/:id",
   authMiddleware,
   withdrawRegistrationController
 );
+router.get("/admin/events", authMiddleware, getAdminEventsWithRegistrations);
+router.get("/admin/event/:eventId", authMiddleware, getEventRegistrationsController);
+
 
 module.exports = router;

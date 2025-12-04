@@ -1,9 +1,7 @@
 const jwt = require("jsonwebtoken");
 const { prisma } = require("../config/database");
 
-/* ============================================================
-   CREATE USER VALIDATION (REGISTER)
-============================================================ */
+
 async function createUserMiddleware(req, res, next) {
     let { name, email, password, confirm_password, role } = req.body;
 
@@ -26,13 +24,11 @@ async function createUserMiddleware(req, res, next) {
         return res.status(400).json({ ERROR: "Invalid email format" });
     }
 
-    // Validate role
     if (!["ADMIN", "STUDENT"].includes(role)) {
         return res.status(400).json({ ERROR: "Role must be ADMIN or STUDENT" });
     }
 
     try {
-        // Check if email already exists
         const existing = await prisma.user.findUnique({
             where: { email },
         });
@@ -49,9 +45,7 @@ async function createUserMiddleware(req, res, next) {
     }
 }
 
-/* ============================================================
-   LOGIN VALIDATION
-============================================================ */
+
 async function loginUserMiddleware(req, res, next) {
     let { email, password } = req.body;
 
@@ -67,43 +61,63 @@ async function loginUserMiddleware(req, res, next) {
     next();
 }
 
-/* ============================================================
-   UPDATE USER PROFILE VALIDATION (name/email only)
-============================================================ */
+
 async function updateUserMiddleware(req, res, next) {
-    let { name, email } = req.body;
-
-    if (!name && !email) {
-        return res.status(400).json({
-            ERROR: "Provide at least one field to update",
-        });
+    const {
+      name,
+      phone,
+      image,
+      roll,
+      department,
+      year,
+      skills,
+      about,
+      designation,
+      office
+    } = req.body;
+  
+    if (
+      !name &&
+      !phone &&
+      !image &&
+      !roll &&
+      !department &&
+      !year &&
+      !skills &&
+      !about &&
+      !designation &&
+      !office
+    ) {
+      return res.status(400).json({
+        ERROR: "Provide at least one field to update."
+      });
     }
-
-    const updateData = {};
-
-    if (name) {
-        name = name.trim();
-        if (!/^[a-zA-Z\s]+$/.test(name)) {
-            return res.status(400).json({ ERROR: "Name must contain only letters & spaces" });
-        }
-        updateData.name = name;
+  
+    if (name && !/^[a-zA-Z\s]+$/.test(name)) {
+      return res.status(400).json({ ERROR: "Name must contain only letters & spaces" });
     }
-
-    if (email) {
-        email = email.trim().toLowerCase();
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-            return res.status(400).json({ ERROR: "Invalid email format" });
-        }
-        updateData.email = email;
+  
+    if (phone && !/^[0-9]{10}$/.test(phone)) {
+      return res.status(400).json({ ERROR: "Phone must be 10 digits" });
     }
-
-    req.body = updateData;
+  
+    req.body = {
+      name,
+      phone,
+      image,
+      roll,
+      department,
+      year,
+      skills,
+      about,
+      designation,
+      office
+    };
+  
     next();
-}
+  }
+  
 
-/* ============================================================
-   AUTH MIDDLEWARE (KEEP)
-============================================================ */
 async function authMiddleware(req, res, next) {
     const authHeader = req.headers.authorization;
 
